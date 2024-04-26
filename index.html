@@ -28,6 +28,7 @@
 </head>
 <body>
 <script>
+  window.addEventListener('load', (event) => {
   document.addEventListener('DOMContentLoaded', function() {
   const style = getComputedStyle(document.documentElement);
   const colorVars = Array.from(style).filter(name => name.startsWith('--color-'));
@@ -48,6 +49,7 @@
     container.appendChild(colorBox);
   });
 });
+    });
 </script>
 </body>
 </html>
