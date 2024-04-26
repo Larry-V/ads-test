@@ -28,28 +28,27 @@
 </head>
 <body>
 <script>
-  window.addEventListener('load', (event) => {
-  document.addEventListener('DOMContentLoaded', function() {
+  window.addEventListener('load', function() {
   const style = getComputedStyle(document.documentElement);
-  const colorVars = Array.from(style).filter(name => name.startsWith('--color-'));
-  console.log(colorVars); // Добавлено для отладки
+  const colorVars = Array.from(style).filter(name => name.startsWith('--'));
+  console.log(colorVars); // Должен выводить массив переменных
 
   const container = document.body;
 
   colorVars.forEach(varName => {
     const colorValue = style.getPropertyValue(varName).trim();
-    console.log(varName, colorValue); // Добавлено для отладки
+    console.log(varName, colorValue); // Должен выводить имя и значение каждой переменной
 
     const colorBox = document.createElement('div');
     colorBox.className = 'color-box';
     colorBox.style.backgroundColor = colorValue;
     colorBox.textContent = varName;
-    console.log(colorBox); // Добавлено для отладки
+    console.log(colorBox); // Должен выводить созданный элемент
 
     container.appendChild(colorBox);
   });
 });
-    });
+
 </script>
 </body>
 </html>
