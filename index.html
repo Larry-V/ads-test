@@ -9,12 +9,14 @@
       display: flex;
       flex-wrap: wrap;
       padding: 20px;
+      background: #fff; /* или любой цвет фона, который вам нравится */
     }
     .color-box {
-      width: 100px;
-      height: 100px;
+      width: 200px; /* или любая другая ширина, которая вам подходит */
+      padding: 10px;
       margin: 10px;
       display: flex;
+      flex-direction: column; /* Это заставит дочерние элементы идти один за другим вертикально */
       align-items: center;
       justify-content: center;
       color: white;
@@ -22,6 +24,14 @@
       font-family: Arial, sans-serif;
       border-radius: 5px;
       box-shadow: 0 0 5px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    .color-name,
+    .color-value {
+      margin-top: 5px;
+    }
+    .color-value {
+      color: black; /* цвет текста для значения переменной для улучшения читаемости */
     }
   </style>
 </head>
@@ -51,7 +61,18 @@ window.addEventListener('load', function() {
     const colorBox = document.createElement('div');
     colorBox.className = 'color-box';
     colorBox.style.backgroundColor = color;
-    colorBox.textContent = `${name}: ${color}`;
+
+    const colorName = document.createElement('div');
+    colorName.className = 'color-name';
+    colorName.textContent = name;
+
+    const colorValue = document.createElement('div');
+    colorValue.className = 'color-value';
+    colorValue.textContent = color;
+
+    colorBox.appendChild(colorName);
+    colorBox.appendChild(colorValue);
+    
     container.appendChild(colorBox);
   });
 });
