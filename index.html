@@ -47,61 +47,53 @@ function getContrastYIQ(hexcolor){
   return (yiq >= 128) ? 'black' : 'white';
 }
 
+// Обработчик события загрузки
 window.addEventListener('load', function() {
-  const style = getComputedStyle(document.documentElement);
-  let colorVars = Array.from(style).filter(name => name.startsWith('--color-'));
-  let groups = {};
-
-  // Группировка переменных по названию группы
-  colorVars.forEach(varName => {
-    // Исправленное регулярное выражение для получения имени группы
-    const match = varName.match(/--color-([a-z]+)-/i);
-    if (match && match[1]) {
-      const groupName = match[1];
-      if (!groups[groupName]) {
-        groups[groupName] = [];
+  // Получение переменных цвета из всех стилевых листов
+  const colorVars = Array.from(document.styleSheets)
+    .filter(sheet => !sheet.href || sheet.href.startsWith(window.location.origin))
+    .reduce((acc, sheet) => {
+      try {
+        Array.from(sheet.cssRules).forEach(rule => {
+          if(rule.selectorText === ':root') {
+            Array.from(rule.style).filter(name => name.startsWith('--color-')).forEach(name => {
+              const color = rule.style.getPropertyValue(name).trim();
+              acc.push({name, color});
+            });
+          }
+        });
+      } catch (e) {
+        console.warn("Unable to process stylesheet: ", sheet.href);
       }
-      groups[groupName].push(varName);
-    }
-  });
+      return acc;
+    }, []);
 
   const container = document.body;
+  // Создание цветных блоков для каждой переменной
+  colorVars.forEach(({name, color}) => {
+    const colorBox = document.createElement('div');
+    colorBox.className = 'color-box';
+    colorBox.style.backgroundColor = color;
+    colorBox.style.color = getContrastYIQ(color); // Применение функции контраста
 
-  // Создание HTML для каждой группы переменных
-  Object.keys(groups).forEach(group => {
-    const groupDiv = document.createElement('div');
-    groupDiv.className = 'group';
+    const colorName = document.createElement('div');
+    colorName.className = 'color-name';
+    colorName.textContent = name;
+    colorName.style.color = getContrastYIQ(color); // Для улучшения видимости названия переменной
 
-    const groupTitle = document.createElement('h2');
-    groupTitle.textContent = group;
-    groupDiv.appendChild(groupTitle);
+    const colorValue = document.createElement('div');
+    colorValue.className = 'color-value';
+    colorValue.textContent = color;
+    colorValue.style.color = getContrastYIQ(color); // Для улучшения видимости значения переменной
 
-    groups[group].forEach(varName => {
-      const colorValue = style.getPropertyValue(varName).trim();
-      const textColor = getContrastYIQ(colorValue);
+    colorBox.appendChild(colorName);
+    colorBox.appendChild(colorValue);
 
-      const colorBox = document.createElement('div');
-      colorBox.className = 'color-box';
-      colorBox.style.backgroundColor = colorValue;
-      colorBox.style.color = textColor;
-
-      const colorName = document.createElement('div');
-      colorName.className = 'color-name';
-      colorName.textContent = varName;
-      colorBox.appendChild(colorName);
-
-      const colorHex = document.createElement('div');
-      colorHex.className = 'color-value';
-      colorHex.textContent = colorValue;
-      colorBox.appendChild(colorHex);
-
-      groupDiv.appendChild(colorBox);
-    });
-
-    container.appendChild(groupDiv);
+    container.appendChild(colorBox);
   });
 });
 </script>
+
 
 
 
