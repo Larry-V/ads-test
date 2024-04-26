@@ -49,17 +49,20 @@ function getContrastYIQ(hexcolor){
 
 window.addEventListener('load', function() {
   const style = getComputedStyle(document.documentElement);
-  const colorVars = Array.from(style).filter(name => name.startsWith('--color-'));
+  let colorVars = Array.from(style).filter(name => name.startsWith('--color-'));
   let groups = {};
 
   // Группировка переменных по названию группы
   colorVars.forEach(varName => {
-    // Получение имени группы, предполагая, что название переменной начинается с --color-groupName-...
-    const groupName = varName.match(/--color-([a-z]+)-/)[1];
-    if (!groups[groupName]) {
-      groups[groupName] = [];
+    // Исправленное регулярное выражение для получения имени группы
+    const match = varName.match(/--color-([a-z]+)-/i);
+    if (match && match[1]) {
+      const groupName = match[1];
+      if (!groups[groupName]) {
+        groups[groupName] = [];
+      }
+      groups[groupName].push(varName);
     }
-    groups[groupName].push(varName);
   });
 
   const container = document.body;
@@ -76,22 +79,22 @@ window.addEventListener('load', function() {
     groups[group].forEach(varName => {
       const colorValue = style.getPropertyValue(varName).trim();
       const textColor = getContrastYIQ(colorValue);
-      
+
       const colorBox = document.createElement('div');
       colorBox.className = 'color-box';
       colorBox.style.backgroundColor = colorValue;
       colorBox.style.color = textColor;
-      
+
       const colorName = document.createElement('div');
       colorName.className = 'color-name';
       colorName.textContent = varName;
       colorBox.appendChild(colorName);
-      
+
       const colorHex = document.createElement('div');
       colorHex.className = 'color-value';
       colorHex.textContent = colorValue;
       colorBox.appendChild(colorHex);
-      
+
       groupDiv.appendChild(colorBox);
     });
 
@@ -99,6 +102,7 @@ window.addEventListener('load', function() {
   });
 });
 </script>
+
 
 
 
