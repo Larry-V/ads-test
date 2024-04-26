@@ -28,9 +28,9 @@
 </head>
 <body>
 <script>
-  window.addEventListener('load', function() {
+window.onload = function() {
   const style = getComputedStyle(document.documentElement);
-  const colorVars = Array.from(style).filter(name => name.startsWith('--'));
+  const colorVars = Array.from(style).filter(name => name.startsWith('--color-'));
   console.log(colorVars); // Должен выводить массив переменных
 
   const container = document.body;
@@ -41,14 +41,12 @@
 
     const colorBox = document.createElement('div');
     colorBox.className = 'color-box';
-    colorBox.style.backgroundColor = colorValue;
-    colorBox.textContent = varName;
-    console.log(colorBox); // Должен выводить созданный элемент
-
-    container.appendChild(colorBox);
+    colorBox.style.backgroundColor = colorValue; // Присваиваем фоновый цвет
+    colorBox.textContent = `${varName}: ${colorValue}`; // Добавляем текст в блок
+    container.appendChild(colorBox); // Добавляем блок на страницу
   });
-});
-
+};
 </script>
+
 </body>
 </html>
