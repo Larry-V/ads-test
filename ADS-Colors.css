@@ -12,4 +12,15 @@
   --color-brand-lighter-6: #e4dcf5;
   --color-brand-normal: #522da5;
 
+  --color-danger-100: #ffe4d7;
+  --color-danger-200: #ffc4af;
+  --color-danger-300: #ff9c87;
+  --color-danger-400: #ff7669;
+  --color-danger-500: #ff3838;
+  --color-danger-600: #db2838;
+  --color-danger-700: #b71c37;
+  --color-danger-800: #931133;
+  --color-danger-900: #7a0a31;
+
+  
 }
