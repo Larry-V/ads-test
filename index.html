@@ -50,11 +50,12 @@ function getContrastYIQ(hexcolor){
 window.addEventListener('load', function() {
   const style = getComputedStyle(document.documentElement);
   const colorVars = Array.from(style).filter(name => name.startsWith('--color-'));
-  const groups = {};
+  let groups = {};
 
-  // Группировка переменных по префиксам
+  // Группировка переменных по названию группы
   colorVars.forEach(varName => {
-    const groupName = varName.split('-')[2]; // Получение имени группы
+    // Получение имени группы, предполагая, что название переменной начинается с --color-groupName-...
+    const groupName = varName.match(/--color-([a-z]+)-/)[1];
     if (!groups[groupName]) {
       groups[groupName] = [];
     }
@@ -63,9 +64,11 @@ window.addEventListener('load', function() {
 
   const container = document.body;
 
-  // Создание HTML для каждой группы
+  // Создание HTML для каждой группы переменных
   Object.keys(groups).forEach(group => {
     const groupDiv = document.createElement('div');
+    groupDiv.className = 'group';
+
     const groupTitle = document.createElement('h2');
     groupTitle.textContent = group;
     groupDiv.appendChild(groupTitle);
@@ -80,10 +83,12 @@ window.addEventListener('load', function() {
       colorBox.style.color = textColor;
       
       const colorName = document.createElement('div');
+      colorName.className = 'color-name';
       colorName.textContent = varName;
       colorBox.appendChild(colorName);
       
       const colorHex = document.createElement('div');
+      colorHex.className = 'color-value';
       colorHex.textContent = colorValue;
       colorBox.appendChild(colorHex);
       
@@ -94,6 +99,7 @@ window.addEventListener('load', function() {
   });
 });
 </script>
+
 
 
 </body>
