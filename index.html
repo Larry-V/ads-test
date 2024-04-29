@@ -10,15 +10,21 @@
       font-size: 12px;
       display: flex;
       flex-direction: column;
-      /* flex-wrap: wrap; */
       padding: 20px;
       background: #fff; /* или любой цвет фона, который вам нравится */
     }
     .color-box {
-      width: 280px;
-      padding: 16px;
       display: flex;
-      flex-direction: column;
+      align-items: center; /* Центрирование элементов по вертикали */
+      margin-bottom: 10px; /* Отступ между блоками */
+    }
+    .color-sample {
+      width: 120px; /* ширина блока цвета */
+      height: 64px; /* высота блока цвета */
+      margin-right: 24px; /* отступ между блоком цвета и текстом */
+    }
+    .color-description {
+      flex-grow: 1; /* текст занимает оставшееся пространство */
     }
     .color-name {
       font-size: 14px;
@@ -26,26 +32,14 @@
     }
     .color-name,
     .color-value {
-      color: black; /* цвет текста для значения переменной для улучшения читаемости */
+      color: black; /* цвет текста */
     }
   </style>
 </head>
 <body>
 
 <script>
-// Функция для определения контрастного цвета текста
-function getContrastYIQ(hexcolor){
-  hexcolor = hexcolor.replace("#", "");
-  var r = parseInt(hexcolor.substr(0,2),16);
-  var g = parseInt(hexcolor.substr(2,2),16);
-  var b = parseInt(hexcolor.substr(4,2),16);
-  var yiq = ((r*299)+(g*587)+(b*114))/1000;
-  return (yiq >= 128) ? 'black' : 'white';
-}
-
-// Обработчик события загрузки
 window.addEventListener('load', function() {
-  // Получение переменных цвета из всех стилевых листов
   const colorVars = Array.from(document.styleSheets)
     .filter(sheet => !sheet.href || sheet.href.startsWith(window.location.origin))
     .reduce((acc, sheet) => {
@@ -65,32 +59,33 @@ window.addEventListener('load', function() {
     }, []);
 
   const container = document.body;
-  // Создание цветных блоков для каждой переменной
   colorVars.forEach(({name, color}) => {
     const colorBox = document.createElement('div');
     colorBox.className = 'color-box';
-    colorBox.style.backgroundColor = color;
-    colorBox.style.color = getContrastYIQ(color); // Применение функции контраста
+
+    const colorSample = document.createElement('div');
+    colorSample.className = 'color-sample';
+    colorSample.style.backgroundColor = color;
+    colorBox.appendChild(colorSample);
+
+    const colorDescription = document.createElement('div');
+    colorDescription.className = 'color-description';
 
     const colorName = document.createElement('div');
     colorName.className = 'color-name';
     colorName.textContent = name;
-    colorName.style.color = getContrastYIQ(color); // Для улучшения видимости названия переменной
 
     const colorValue = document.createElement('div');
     colorValue.className = 'color-value';
     colorValue.textContent = color;
-    colorValue.style.color = getContrastYIQ(color); // Для улучшения видимости значения переменной
 
-    colorBox.appendChild(colorName);
-    colorBox.appendChild(colorValue);
+    colorDescription.appendChild(colorName);
+    colorDescription.appendChild(colorValue);
+    colorBox.appendChild(colorDescription);
 
     container.appendChild(colorBox);
   });
 });
 </script>
-
-
-  
 </body>
 </html>
