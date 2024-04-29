@@ -3,13 +3,13 @@
   --color-brand-darker-1: #422484;
   --color-brand-darker-2: #311b63;
   --color-brand-darker-3: #211242;
+  --color-brand-normal: #522da5;
   --color-brand-lighter-1: #6f50b5;
   --color-brand-lighter-2: #8c73c5;
   --color-brand-lighter-3: #aa96d5;
   --color-brand-lighter-4: #c7b9e5;
   --color-brand-lighter-5: #d5cbed;
   --color-brand-lighter-6: #e4dcf5;
-  --color-brand-normal: #522da5;
 
   --color-danger-100: #ffe4d7;
   --color-danger-200: #ffc4af;
@@ -21,19 +21,6 @@
   --color-danger-800: #931133;
   --color-danger-900: #7a0a31;
 
-  --color-dark-100: #29292924;
-  --color-dark-1000: #292929;
-  --color-dark-200: #29292933;
-  --color-dark-25: #2929290a;
-  --color-dark-300: #2929294d;
-  --color-dark-400: #29292966;
-  --color-dark-50: #29292912;
-  --color-dark-500: #29292980;
-  --color-dark-600: #29292999;
-  --color-dark-700: #292929b2;
-  --color-dark-800: #292929cc;
-  --color-dark-900: #292929e5;
-
   --color-info-100: #cbfef9;
   --color-info-200: #98fdfa;
   --color-info-300: #65f1f9;
@@ -44,20 +31,33 @@
   --color-info-800: #004f89;
   --color-info-900: #003971;
 
-  --color-light-100: #ffffff24;
-  --color-light-1000: #ffffff;
-  --color-light-200: #ffffff33;
+  --color-dark-25: #2929290a;
+  --color-dark-50: #29292912;
+  --color-dark-100: #29292924;
+  --color-dark-200: #29292933;
+  --color-dark-300: #2929294d;
+  --color-dark-400: #29292966;
+  --color-dark-500: #29292980;
+  --color-dark-600: #29292999;
+  --color-dark-700: #292929b2;
+  --color-dark-800: #292929cc;
+  --color-dark-900: #292929e5;
+  --color-dark-1000: #292929;
+
   --color-light-25: #ffffff0a;
+  --color-light-50: #ffffff12;
+  --color-light-100: #ffffff24;
+  --color-light-200: #ffffff33;
   --color-light-300: #ffffff4d;
   --color-light-400: #ffffff66;
-  --color-light-50: #ffffff12;
   --color-light-500: #ffffff80;
   --color-light-600: #ffffff99;
   --color-light-700: #ffffffb2;
   --color-light-800: #ffffffcc;
   --color-light-900: #ffffffe5;
+  --color-light-1000: #ffffff;
 
-   --color-success-100: #eafcd2;
+  --color-success-100: #eafcd2;
   --color-success-200: #d1faa7;
   --color-success-300: #aef178;
   --color-success-400: #8be355;
@@ -94,4 +94,5 @@
   --color-border-info: var(--color-info-500);
   --color-border-success: var(--color-success-500);
   --color-border-warning: var(--color-warning-500);
+  
 }
