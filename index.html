@@ -18,6 +18,14 @@
       align-items: center; /* Vertical alignment */
       margin-left: 100px;
     }
+    .color-box::after {
+        content: '';
+        display: block;
+        height: 1px;
+        background: #29292912;
+        width: 100%;
+    }
+    
     .color-sample {
       width: 200px; 
       height: 72px;
@@ -25,7 +33,6 @@
       position: relative;
       background-color: inherit;
     }
-
     .color-sample::before {
       content: "";
       position: absolute;
@@ -33,8 +40,6 @@
       left: -50%;
       width: 100%;
       height: 100%;
-      border-bottom: 1px solid #ccc;
-      box-sizing: border-box;
       background-image: url('pattern-2.png');
       z-index: -1;
     }
