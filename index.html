@@ -35,20 +35,12 @@
 <script>
 // Функция для определения контрастного цвета текста
 function getContrastYIQ(hexcolor){
-  // Извлечение компонентов цвета
-  let r = parseInt(hexcolor.substr(1,2), 16);
-  let g = parseInt(hexcolor.substr(3,2), 16);
-  let b = parseInt(hexcolor.substr(5,2), 16);
-  let a = hexcolor.length > 7 ? parseInt(hexcolor.substr(7,2), 16) / 255 : 1;
-
-  // Приближение к фону, если есть прозрачность (предполагаем белый фон)
-  r = r * a + (1 - a) * 255;
-  g = g * a + (1 - a) * 255;
-  b = b * a + (1 - a) * 255;
-
-  // Преобразование в яркость по формуле YIQ
-  const yiq = (r*299 + g*587 + b*114) / 1000;
-  return yiq >= 128 ? 'black' : 'white';
+  hexcolor = hexcolor.replace("#", "");
+  var r = parseInt(hexcolor.substr(0,2),16);
+  var g = parseInt(hexcolor.substr(2,2),16);
+  var b = parseInt(hexcolor.substr(4,2),16);
+  var yiq = ((r*299)+(g*587)+(b*114))/1000;
+  return (yiq >= 128) ? 'black' : 'white';
 }
 
 // Функция для рекурсивного разрешения CSS переменных
@@ -92,6 +84,7 @@ window.addEventListener('load', function() {
   });
 });
 </script>
+
 
   
 </body>
