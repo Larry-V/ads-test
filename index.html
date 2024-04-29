@@ -16,25 +16,26 @@
     .color-box {
       display: flex;
       align-items: center; /* Центрирование элементов по вертикали */
+      margin-left: 100px;
     }
     .color-sample {
       width: 200px; /* ширина блока цвета */
       height: 72px; /* высота блока цвета */
       margin-right: 16px; /* отступ между блоком цвета и текстом */
-        position: relative; /* Добавляем относительное позиционирование */
-  background-color: inherit; /* Цвет блока будет наследоваться */
+      position: relative; /* Добавляем относительное позиционирование */
+      background-color: inherit; /* Цвет блока будет наследоваться */
     }
 
     .color-sample::before {
-  content: ""; /* Необходимо для отображения псевдоэлемента */
-  position: absolute; /* Абсолютное позиционирование внутри color-sample */
-  top: 0;
-  left: 0;
-  width: 150%;
-  height: 100%;
-  background-image: url('pattern.png'); /* Путь к вашему изображению */
-  z-index: -1; /* Убедитесь, что фон находится за основным контентом блока */
-}
+      content: ""; /* Необходимо для отображения псевдоэлемента */
+      position: absolute; /* Абсолютное позиционирование внутри color-sample */
+      top: 0;
+      left: -50%;
+      width: 150%;
+      height: 100%;
+      background-image: url('pattern.png'); /* Путь к вашему изображению */
+      z-index: -1; /* Убедитесь, что фон находится за основным контентом блока */
+    }
     
     .color-description {
       flex-grow: 1; /* текст занимает оставшееся пространство */
