@@ -17,14 +17,16 @@
     .color-stack {
       display: flex;
       flex-direction: column;
-      flex: 1 1 472px;
+      flex: 1 1 auto;
       min-width: 472px;
+      max-width: calc(100% - 88px);
     }
     .color-box {
       display: flex;
-      align-items: center; /* Вертикальное выравнивание */
+      align-items: center;
       position: relative;
       padding-left: 88px;
+      box-sizing: border-box;
     }
     .color-box::before {
         content: '';
