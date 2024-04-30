@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>ADS | Color Tokens</title>
+  <link rel="stylesheet" href="ADS-Colors.css" data-title="Test443">
+  <link rel="stylesheet" href="ADS-Colors-MMS.css" data-title="MMS">
   <link rel="stylesheet" href="ADS-Colors.css">
   <link rel="stylesheet" href="ADS-Colors-MMS.css">
-  <link rel="stylesheet" href="ADS-Colors.css">
-  <link rel="stylesheet" href="ADS-Colors-MMS.css">
+
   <!-- Добавьте сюда ссылки на другие CSS файлы, которые вы хотите просканировать -->
   <style>
     :root {
@@ -76,27 +77,24 @@
 <body>
 <script>
 window.addEventListener('load', function() {
-  const colorStacks = document.createElement('div');
-  colorStacks.className = 'color-stacks';
-
   Array.from(document.styleSheets)
     .filter(sheet => !sheet.href || sheet.href.startsWith(window.location.origin))
-    .forEach((sheet, index) => { // Добавлен индекс для названия файла по умолчанию
+    .forEach((sheet, index) => {
+      const linkElement = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+                               .find(link => link.href === sheet.href);
+      const title = linkElement ? linkElement.getAttribute('data-title') : `Файл ${index + 1}`;
+
       const stack = document.createElement('div');
       stack.className = 'color-stack';
 
-      // Создаем и добавляем заголовок для стека
-      const stackTitle = document.createElement('h3');
+      const stackTitle = document.createElement('h2');
       stackTitle.className = 'color-stack-title';
+      stackTitle.textContent = title; // Устанавливаем текст заголовка
       stack.appendChild(stackTitle);
 
       try {
         Array.from(sheet.cssRules).forEach(rule => {
           if (rule.selectorText === ':root') {
-            let fileTitle = rule.style.getPropertyValue('--color-file-title').trim();
-            fileTitle = fileTitle || `Color List ${index + 1}`; // Текст по умолчанию, если переменная не найдена
-            stackTitle.textContent = fileTitle; // Устанавливаем текст заголовка
-
             Array.from(rule.style).filter(name => name.startsWith('--color-')).forEach(name => {
               const color = rule.style.getPropertyValue(name).trim();
               const colorBox = document.createElement('div');
@@ -129,12 +127,10 @@ window.addEventListener('load', function() {
       } catch (e) {
         console.warn("Unable to process stylesheet: ", sheet.href);
       }
-      if (stack.children.length > 1) { // Проверка на наличие хотя бы одного colorBox в стеке
+      if (stack.children.length > 1) {
         document.body.appendChild(stack); // Добавляем стек в body
       }
     });
-
-  document.body.appendChild(colorStacks); // Добавляем все стеки на страницу
 });
 </script>
 </body>
