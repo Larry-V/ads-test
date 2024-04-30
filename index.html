@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="ADS-Colors-MMS.css">
   <!-- Добавьте сюда ссылки на другие CSS файлы, которые вы хотите просканировать -->
   <style>
+    :root {
+    --swatch-width: 128px;
     body {
       font-family: Consolas, sans-serif;
       display: flex;
@@ -19,9 +21,7 @@
     .color-stack {
       display: flex;
       flex-direction: column;
-      /* flex: 1 1 auto; */
-      /* min-width: 472px; */
-      padding-left: 35px;
+      padding-left: calc(var(--swatch-width) / 4);
       box-sizing: border-box;
     }
     .color-box {
@@ -40,7 +40,7 @@
       z-index: 999;
     }
     .color-sample {
-      width: 140px;
+      width: var(--swatch-width);
       height: 72px;
       background-color: inherit;
       border-radius: 16px;
