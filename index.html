@@ -8,17 +8,18 @@
   <!-- Добавьте сюда ссылки на другие CSS файлы, которые вы хотите просканировать -->
   <style>
     body {
-      font-family: Consolas, sans-serif;
-      font-size: 12px;
       display: flex;
-      flex-direction: row; /* Теперь используем горизонтальное направление */
-      flex-wrap: wrap; /* Перенос элементов на новую строку, если не хватает места */
+      flex-direction: row; /* Все дочерние элементы располагаются в ряд */
+      overflow-x: auto; /* Включаем горизонтальный скролл при переполнении */
       padding: 20px;
       background: #fff;
     }
+    
     .color-stack {
-      flex-basis: 100%; /* Каждый стек занимает полную ширину */
-      margin-bottom: 40px; /* Отступ для каждого стека */
+      display: flex;
+      flex-direction: column;
+      flex: 0 0 472px; /* Задаем фиксированную ширину для стеков и отключаем их растягивание и сжатие */
+      margin: 0 10px; /* Отступы между стеками */
     }
     .color-box {
       display: flex;
@@ -113,8 +114,8 @@ window.addEventListener('load', function() {
       } catch (e) {
         console.warn("Unable to process stylesheet: ", sheet.href);
       }
-      if (stack.firstChild) { // Если в стеке есть цвета, добавляем его на страницу
-        colorStacks.appendChild(stack);
+      if (stack.firstChild) {
+        document.body.appendChild(stack); // Добавляем стек прямо в body
       }
     });
 
