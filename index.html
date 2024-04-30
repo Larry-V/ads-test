@@ -14,13 +14,10 @@
       overflow-x: auto;
       background: #fff;
     }
-    
     .color-stack {
       display: flex;
       flex-direction: column;
-      flex-grow: 1; /* Блоки будут растягиваться, чтобы занять все доступное пространство */
-      flex-shrink: 1; /* Блоки будут сжиматься, но не меньше, чем min-width */
-      flex-basis: 0; /* Устанавливаем начальный размер, от которого будет происходить рост и сжатие */
+      flex: 1 1 472px;
       min-width: 472px;
     }
     .color-box {
