@@ -10,7 +10,7 @@
   <!-- Добавьте сюда ссылки на другие CSS файлы, которые вы хотите просканировать -->
   <style>
     :root {
-    --swatch-width: 124px;
+      --swatch-width: 124px;
     }
     body {
       font-family: Consolas, sans-serif;
@@ -81,12 +81,22 @@ window.addEventListener('load', function() {
 
   Array.from(document.styleSheets)
     .filter(sheet => !sheet.href || sheet.href.startsWith(window.location.origin))
-    .forEach(sheet => {
+    .forEach((sheet, index) => { // Добавлен индекс для названия файла по умолчанию
       const stack = document.createElement('div');
       stack.className = 'color-stack';
+
+      // Создаем и добавляем заголовок для стека
+      const stackTitle = document.createElement('h2');
+      stackTitle.className = 'color-stack-title';
+      stack.appendChild(stackTitle);
+
       try {
         Array.from(sheet.cssRules).forEach(rule => {
           if (rule.selectorText === ':root') {
+            let fileTitle = rule.style.getPropertyValue('--color-file-title').trim();
+            fileTitle = fileTitle || `Файл ${index + 1}`; // Текст по умолчанию, если переменная не найдена
+            stackTitle.textContent = fileTitle; // Устанавливаем текст заголовка
+
             Array.from(rule.style).filter(name => name.startsWith('--color-')).forEach(name => {
               const color = rule.style.getPropertyValue(name).trim();
               const colorBox = document.createElement('div');
@@ -119,8 +129,8 @@ window.addEventListener('load', function() {
       } catch (e) {
         console.warn("Unable to process stylesheet: ", sheet.href);
       }
-      if (stack.firstChild) {
-        document.body.appendChild(stack); // Добавляем стек прямо в body
+      if (stack.children.length > 1) { // Проверка на наличие хотя бы одного colorBox в стеке
+        document.body.appendChild(stack); // Добавляем стек в body
       }
     });
 
