@@ -3,114 +3,133 @@
 <head>
   <meta charset="UTF-8">
   <title>ADS | Color Tokens</title>
-  <link rel="stylesheet" href="ADS-Colors.css">
+  <link rel="stylesheet" href="ads-colors-test443.scss" data-title="Test443">
+  <link rel="stylesheet" href="ads-colors-mms.css" data-title="My Music Staff">
+  <link rel="stylesheet" href="ads-colors-tb.css" data-title="TutorBird">
+  <link rel="stylesheet" href="ads-colors-ad.css" data-title="AthletaDesk">
+  
   <style>
+    :root {
+      --swatch-width: 124px;
+    }
     body {
       font-family: Consolas, sans-serif;
-      font-size: 12px;
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .color-stack {
       display: flex;
       flex-direction: column;
-      padding: 20px;
-      background: #fff;
+      padding-left: calc(var(--swatch-width) / 4);
+      box-sizing: border-box;
     }
     .color-box {
-      position: relative;
       display: flex;
-      align-items: center; /* Vertical alignment */
-      margin-left: 100px;
+      align-items: center;
+      position: relative;
     }
     .color-box::before {
-        content: '';
-        position: absolute;
-        top: -1px;
-        display: block;
-        height: 1px;
-        background: #29292912;
-        width: 100%;
-        z-index: 999;
+      content: '';
+      position: absolute;
+      top: -1px;
+      display: block;
+      height: 1px;
+      background: #29292912;
+      width: 100%;
+      z-index: 999;
     }
-    
     .color-sample {
-      width: 174px;
+      width: var(--swatch-width);
       height: 72px;
-      margin-right: 16px;
-      position: relative;
       background-color: inherit;
       border-radius: 16px;
+      position: relative;
     }
     .color-sample::before {
+      background-image: url("data:image/svg+xml;utf8,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 0H0V6H6V12H12V6H6V0Z' fill='%23D9D9D9'/%3E%3C/svg%3E");
       content: "";
       position: absolute;
       top: 0;
-      left: -50%;
-      width: 100%;
+      left: -25%;
+      width: 75%;
       height: 100%;
-      background-image: url('pattern-2.png');
       z-index: -1;
     }
-    
     .color-description {
+      padding: 0 16px;
       flex-grow: 1;
     }
     .color-name {
-      font-size: 14px;
-      margin-bottom: 4px;
+      font-size: 13px;
+      margin-bottom: 6px;
     }
-    .color-name,
     .color-value {
-      color: black;
+      font-size: 12px;
+      color: #888;
     }
   </style>
 </head>
 <body>
-
 <script>
 window.addEventListener('load', function() {
-  const colorVars = Array.from(document.styleSheets)
+  Array.from(document.styleSheets)
     .filter(sheet => !sheet.href || sheet.href.startsWith(window.location.origin))
-    .reduce((acc, sheet) => {
+    .forEach((sheet, index) => {
+      const linkElement = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+                               .find(link => link.href === sheet.href);
+      const title = linkElement ? linkElement.getAttribute('data-title') : `Color list ${index + 1}`;
+
+      const stack = document.createElement('div');
+      stack.className = 'color-stack';
+
+      const stackTitle = document.createElement('h3');
+      stackTitle.className = 'color-stack-title';
+      stackTitle.textContent = title;
+      stack.appendChild(stackTitle);
+
       try {
         Array.from(sheet.cssRules).forEach(rule => {
-          if(rule.selectorText === ':root') {
+          if (rule.selectorText === ':root') {
             Array.from(rule.style).filter(name => name.startsWith('--color-')).forEach(name => {
               const color = rule.style.getPropertyValue(name).trim();
-              acc.push({name, color});
+              const colorBox = document.createElement('div');
+              colorBox.className = 'color-box';
+
+              const colorSample = document.createElement('div');
+              colorSample.className = 'color-sample';
+              colorSample.style.backgroundColor = color;
+              colorBox.appendChild(colorSample);
+
+              const colorDescription = document.createElement('div');
+              colorDescription.className = 'color-description';
+
+              const colorName = document.createElement('div');
+              colorName.className = 'color-name';
+              colorName.textContent = name;
+
+              const colorValue = document.createElement('div');
+              colorValue.className = 'color-value';
+              colorValue.textContent = color;
+
+              colorDescription.appendChild(colorName);
+              colorDescription.appendChild(colorValue);
+              colorBox.appendChild(colorDescription);
+
+              stack.appendChild(colorBox);
             });
           }
         });
       } catch (e) {
         console.warn("Unable to process stylesheet: ", sheet.href);
       }
-      return acc;
-    }, []);
-
-  const container = document.body;
-  colorVars.forEach(({name, color}) => {
-    const colorBox = document.createElement('div');
-    colorBox.className = 'color-box';
-
-    const colorSample = document.createElement('div');
-    colorSample.className = 'color-sample';
-    colorSample.style.backgroundColor = color;
-    colorBox.appendChild(colorSample);
-
-    const colorDescription = document.createElement('div');
-    colorDescription.className = 'color-description';
-
-    const colorName = document.createElement('div');
-    colorName.className = 'color-name';
-    colorName.textContent = name;
-
-    const colorValue = document.createElement('div');
-    colorValue.className = 'color-value';
-    colorValue.textContent = color;
-
-    colorDescription.appendChild(colorName);
-    colorDescription.appendChild(colorValue);
-    colorBox.appendChild(colorDescription);
-
-    container.appendChild(colorBox);
-  });
+      if (stack.children.length > 1) {
+        document.body.appendChild(stack);
+      }
+    });
 });
 </script>
 </body>
