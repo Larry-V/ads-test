@@ -5,20 +5,26 @@
   <title>ADS | Color Tokens</title>
   <link rel="stylesheet" href="ADS-Colors.css">
   <link rel="stylesheet" href="ADS-Colors-MMS.css">
+  <!-- Добавьте сюда ссылки на другие CSS файлы, которые вы хотите просканировать -->
   <style>
     body {
       font-family: Consolas, sans-serif;
       font-size: 12px;
       display: flex;
-      flex-direction: column;
+      flex-direction: row; /* Теперь используем горизонтальное направление */
+      flex-wrap: wrap; /* Перенос элементов на новую строку, если не хватает места */
       padding: 20px;
       background: #fff;
     }
+    .color-stack {
+      flex-basis: 100%; /* Каждый стек занимает полную ширину */
+      margin-bottom: 40px; /* Отступ для каждого стека */
+    }
     .color-box {
-      position: relative;
       display: flex;
-      align-items: center; /* Vertical alignment */
-      margin-left: 100px;
+      align-items: center; /* Вертикальное выравнивание */
+      margin-bottom: 10px;
+      position: relative;
     }
     .color-box::before {
         content: '';
@@ -30,14 +36,13 @@
         width: 100%;
         z-index: 999;
     }
-    
     .color-sample {
       width: 174px;
       height: 72px;
       margin-right: 16px;
-      position: relative;
       background-color: inherit;
       border-radius: 16px;
+      position: relative;
     }
     .color-sample::before {
       content: "";
@@ -46,10 +51,9 @@
       left: -50%;
       width: 100%;
       height: 100%;
-      background-image: url('pattern-2.png');
+      background-image: url('pattern-2.png'); /* Вернул фоновое изображение */
       z-index: -1;
     }
-    
     .color-description {
       flex-grow: 1;
     }
@@ -64,54 +68,57 @@
   </style>
 </head>
 <body>
-
 <script>
 window.addEventListener('load', function() {
-  const colorVars = Array.from(document.styleSheets)
+  const colorStacks = document.createElement('div');
+  colorStacks.className = 'color-stacks';
+
+  Array.from(document.styleSheets)
     .filter(sheet => !sheet.href || sheet.href.startsWith(window.location.origin))
-    .reduce((acc, sheet) => {
+    .forEach(sheet => {
+      const stack = document.createElement('div');
+      stack.className = 'color-stack';
       try {
         Array.from(sheet.cssRules).forEach(rule => {
-          if(rule.selectorText === ':root') {
+          if (rule.selectorText === ':root') {
             Array.from(rule.style).filter(name => name.startsWith('--color-')).forEach(name => {
               const color = rule.style.getPropertyValue(name).trim();
-              acc.push({name, color});
+              const colorBox = document.createElement('div');
+              colorBox.className = 'color-box';
+
+              const colorSample = document.createElement('div');
+              colorSample.className = 'color-sample';
+              colorSample.style.backgroundColor = color;
+              colorBox.appendChild(colorSample);
+
+              const colorDescription = document.createElement('div');
+              colorDescription.className = 'color-description';
+
+              const colorName = document.createElement('div');
+              colorName.className = 'color-name';
+              colorName.textContent = name;
+
+              const colorValue = document.createElement('div');
+              colorValue.className = 'color-value';
+              colorValue.textContent = color;
+
+              colorDescription.appendChild(colorName);
+              colorDescription.appendChild(colorValue);
+              colorBox.appendChild(colorDescription);
+
+              stack.appendChild(colorBox);
             });
           }
         });
       } catch (e) {
         console.warn("Unable to process stylesheet: ", sheet.href);
       }
-      return acc;
-    }, []);
+      if (stack.firstChild) { // Если в стеке есть цвета, добавляем его на страницу
+        colorStacks.appendChild(stack);
+      }
+    });
 
-  const container = document.body;
-  colorVars.forEach(({name, color}) => {
-    const colorBox = document.createElement('div');
-    colorBox.className = 'color-box';
-
-    const colorSample = document.createElement('div');
-    colorSample.className = 'color-sample';
-    colorSample.style.backgroundColor = color;
-    colorBox.appendChild(colorSample);
-
-    const colorDescription = document.createElement('div');
-    colorDescription.className = 'color-description';
-
-    const colorName = document.createElement('div');
-    colorName.className = 'color-name';
-    colorName.textContent = name;
-
-    const colorValue = document.createElement('div');
-    colorValue.className = 'color-value';
-    colorValue.textContent = color;
-
-    colorDescription.appendChild(colorName);
-    colorDescription.appendChild(colorValue);
-    colorBox.appendChild(colorDescription);
-
-    container.appendChild(colorBox);
-  });
+  document.body.appendChild(colorStacks); // Добавляем все стеки на страницу
 });
 </script>
 </body>
