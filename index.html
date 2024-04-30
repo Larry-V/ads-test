@@ -86,7 +86,7 @@ window.addEventListener('load', function() {
       stack.className = 'color-stack';
 
       // Создаем и добавляем заголовок для стека
-      const stackTitle = document.createElement('h2');
+      const stackTitle = document.createElement('h3');
       stackTitle.className = 'color-stack-title';
       stack.appendChild(stackTitle);
 
@@ -94,7 +94,7 @@ window.addEventListener('load', function() {
         Array.from(sheet.cssRules).forEach(rule => {
           if (rule.selectorText === ':root') {
             let fileTitle = rule.style.getPropertyValue('--color-file-title').trim();
-            fileTitle = fileTitle || `Файл ${index + 1}`; // Текст по умолчанию, если переменная не найдена
+            fileTitle = fileTitle || `Color List ${index + 1}`; // Текст по умолчанию, если переменная не найдена
             stackTitle.textContent = fileTitle; // Устанавливаем текст заголовка
 
             Array.from(rule.style).filter(name => name.startsWith('--color-')).forEach(name => {
