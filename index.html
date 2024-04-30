@@ -5,7 +5,7 @@
   <title>ADS | Color Tokens</title>
   <link rel="stylesheet" href="ADS-Colors.css" data-title="Test443">
   <link rel="stylesheet" href="ADS-Colors-MMS.css" data-title="MMS">
-  <link rel="stylesheet" href="ADS-Colors.css">
+  <link rel="stylesheet" href="ADS-Colors.css" data-title="TB">
   <link rel="stylesheet" href="ADS-Colors-MMS.css">
 
   <!-- Добавьте сюда ссылки на другие CSS файлы, которые вы хотите просканировать -->
@@ -82,7 +82,7 @@ window.addEventListener('load', function() {
     .forEach((sheet, index) => {
       const linkElement = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
                                .find(link => link.href === sheet.href);
-      const title = linkElement ? linkElement.getAttribute('data-title') : `Файл ${index + 1}`;
+      const title = linkElement ? linkElement.getAttribute('data-title') : `Color list ${index + 1}`;
 
       const stack = document.createElement('div');
       stack.className = 'color-stack';
