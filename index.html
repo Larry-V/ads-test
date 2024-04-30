@@ -8,24 +8,27 @@
   <!-- Добавьте сюда ссылки на другие CSS файлы, которые вы хотите просканировать -->
   <style>
     body {
+      font-family: Consolas, sans-serif;
       display: flex;
-      flex-direction: row; /* Все дочерние элементы располагаются в ряд */
-      overflow-x: auto; /* Включаем горизонтальный скролл при переполнении */
-      padding: 20px;
+      flex-direction: row;
+      overflow-x: auto;
       background: #fff;
     }
     
     .color-stack {
       display: flex;
       flex-direction: column;
-      flex: 0 0 472px; /* Задаем фиксированную ширину для стеков и отключаем их растягивание и сжатие */
-      margin: 0 10px; /* Отступы между стеками */
+      flex-grow: 1; /* Блоки будут растягиваться, чтобы занять все доступное пространство */
+      flex-shrink: 1; /* Блоки будут сжиматься, но не меньше, чем min-width */
+      flex-basis: 0; /* Устанавливаем начальный размер, от которого будет происходить рост и сжатие */
+      min-width: 472px;
     }
     .color-box {
       display: flex;
       align-items: center; /* Вертикальное выравнивание */
       margin-bottom: 10px;
       position: relative;
+      padding-left: 88px;
     }
     .color-box::before {
         content: '';
@@ -62,9 +65,8 @@
       font-size: 14px;
       margin-bottom: 4px;
     }
-    .color-name,
     .color-value {
-      color: black;
+      font-size: 12px;
     }
   </style>
 </head>
