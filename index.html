@@ -7,8 +7,7 @@
   <link rel="stylesheet" href="ads-colors-mms.css" data-title="My Music Staff">
   <link rel="stylesheet" href="ads-colors-tb.css" data-title="TutorBird">
   <link rel="stylesheet" href="ads-colors-ad.css" data-title="AthletaDesk">
-
-  <!-- Добавьте сюда ссылки на другие CSS файлы, которые вы хотите просканировать -->
+  
   <style>
     :root {
       --swatch-width: 124px;
@@ -87,9 +86,9 @@ window.addEventListener('load', function() {
       const stack = document.createElement('div');
       stack.className = 'color-stack';
 
-      const stackTitle = document.createElement('h2');
+      const stackTitle = document.createElement('h3');
       stackTitle.className = 'color-stack-title';
-      stackTitle.textContent = title; // Устанавливаем текст заголовка
+      stackTitle.textContent = title;
       stack.appendChild(stackTitle);
 
       try {
@@ -128,7 +127,7 @@ window.addEventListener('load', function() {
         console.warn("Unable to process stylesheet: ", sheet.href);
       }
       if (stack.children.length > 1) {
-        document.body.appendChild(stack); // Добавляем стек в body
+        document.body.appendChild(stack);
       }
     });
 });
